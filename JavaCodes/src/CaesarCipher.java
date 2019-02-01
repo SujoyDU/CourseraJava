@@ -120,13 +120,18 @@ public class CaesarCipher {
         System.out.println("In a caesar cipher");
         CaesarCipher CC = new CaesarCipher();
         CC.reverseString("test");
-        System.out.println(CC.encryptionBuilder(20));
-        System.out.println(CC.encryptionBuilderFromSubStirng(20));
-        String EncryptedStr = CC.EncryptString("A BAT", 19);
-        String DecryptedStr= CC.DecryptString(EncryptedStr,19);
+        int EncryptionKey = 19;
+        System.out.println(CC.encryptionBuilder(EncryptionKey));
+        System.out.println(CC.encryptionBuilderFromSubStirng(EncryptionKey));
+        String EncryptedStr = CC.EncryptString("A BATMAN and Robin", EncryptionKey);
+        String DecryptedStr= CC.DecryptString(EncryptedStr,EncryptionKey);
         System.out.format("Encrypted String: %s\nDecrypted String: %s\n", EncryptedStr,DecryptedStr);
-        System.out.format("Substring Encrypted Stirng: %s", CC.encryptWithSubStringMethod("A BAT", 19));
 
+
+        String EncryptedSubString = CC.encryptWithSubStringMethod("A BATMAN and Robin", EncryptionKey);
+        String DecryptedSubString = CC.encryptWithSubStringMethod(EncryptedSubString, 26-EncryptionKey);
+        System.out.format("Substring Encrypted Stirng: %s\n",EncryptedSubString);
+        System.out.format("Substring Encrypted Stirng: %s\n",DecryptedSubString);
     }
 
 }
