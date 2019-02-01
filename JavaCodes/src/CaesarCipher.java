@@ -1,5 +1,53 @@
 public class CaesarCipher {
 
+    //Coursera Logic using Substring and characters
+    private String encryptionBuilderFromSubStirng(int EncryptKey) {
+        String alpahbet = "abcdefghijklmnopqrstuvwxyz";
+        StringBuilder encryptedAlphabet = new StringBuilder(alpahbet.substring(EncryptKey));
+        encryptedAlphabet.append(alpahbet.substring(0, EncryptKey));
+
+        return encryptedAlphabet.toString();
+    }
+    private String encryptWithSubStringMethod(String Str, int EncryptKey){
+        String alpahbet="abcdefghijklmnopqrstuvwxyz";
+        String enc = encryptionBuilderFromSubStirng(EncryptKey);
+        StringBuilder encryptedString=new StringBuilder(Str);
+        for(int i=0; i<encryptedString.length(); i++){
+            char CurrentChar = encryptedString.charAt(i);
+            boolean isUpper = Character.isUpperCase(CurrentChar);
+            if(isUpper) CurrentChar = Character.toLowerCase(CurrentChar);
+
+            int idx = alpahbet.indexOf(CurrentChar);
+            if(idx != -1) {
+                char newChar = enc.charAt(idx);
+                if(isUpper) newChar = Character.toUpperCase(newChar);
+                encryptedString.setCharAt(i,newChar);
+            }
+        }
+
+
+        //My old logic-pathetic!!!!
+        // StringBuilder encryptedString=new StringBuilder();
+//        for(int i=0; i< Str.length(); i++){
+//            Character ch = Str.charAt(i);
+//            if(Character.isLetter(ch)) {
+//                boolean upperCase= Character.isUpperCase(ch);
+//                if(upperCase){
+//                    ch = Character.toLowerCase(ch);
+//                }
+//                int ind = alpahbet.indexOf(ch);
+//                char outputChar = enc.charAt(ind);
+//                if(upperCase) {
+//                    encryptedString.append(Character.toUpperCase(outputChar));
+//                }
+//                else encryptedString.append(outputChar);
+//            }
+//            else encryptedString.append(ch);
+//        }
+        return encryptedString.toString();
+    }
+
+
     private void reverseString(String s){
         String revStr ="";
         for(int i=0; i<s.length(); i++){
@@ -7,6 +55,8 @@ public class CaesarCipher {
         }
         System.out.println(revStr);
     }
+
+    //My method using ascii values
     private char[] encryptionBuilder(int EncryptKey){
         char[] charAr = new char[26];
         for(int i=0; i<26; i++){
@@ -20,13 +70,7 @@ public class CaesarCipher {
         return charAr;
     }
 
-    private String encryptionBuilderFromSubStirng(int EncryptKey){
-        String alpahbet="abcdefghijklmnopqrstuvwxyz";
-        String enc = alpahbet.substring(EncryptKey);
-        enc = enc+ alpahbet.substring(0,EncryptKey);
 
-        return enc;
-    }
     private String EncryptString(String Str,int EncryptKey){
         char[] encryptStr = new char[Str.length()];
         for(int i=0; i< Str.length(); i++){
@@ -78,9 +122,10 @@ public class CaesarCipher {
         CC.reverseString("test");
         System.out.println(CC.encryptionBuilder(20));
         System.out.println(CC.encryptionBuilderFromSubStirng(20));
-        String EncryptedStr = CC.EncryptString("I AM", 17);
-        String DecryptedStr= CC.DecryptString(EncryptedStr,17);
-        System.out.format("Encrypted String: %s\nDecrypted String: %s", EncryptedStr,DecryptedStr);
+        String EncryptedStr = CC.EncryptString("A BAT", 19);
+        String DecryptedStr= CC.DecryptString(EncryptedStr,19);
+        System.out.format("Encrypted String: %s\nDecrypted String: %s\n", EncryptedStr,DecryptedStr);
+        System.out.format("Substring Encrypted Stirng: %s", CC.encryptWithSubStringMethod("A BAT", 19));
 
     }
 
