@@ -8,6 +8,10 @@
 .idea/**/dictionaries
 .idea/**/shelf
 
+JavaCodes/.idea
+JavaCodes/out
+JavaCodes/*iml
+
 # Generated files
 .idea/**/contentModel.xml
 
