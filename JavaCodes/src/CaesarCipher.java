@@ -10,6 +10,28 @@ public class CaesarCipher {
 
         return encryptedAlphabet.toString();
     }
+
+    private String encryptWithTwoCiphers(String Str, int key1, int key2){
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        String key1Encryption = encryptionBuilderFromSubStirng(key1);
+        String key2Encryption = encryptionBuilderFromSubStirng(key2);
+        StringBuilder encryptStr = new StringBuilder(Str);
+        for (int i=0; i< encryptStr.length(); i++) {
+            char ch = encryptStr.charAt(i);
+            boolean isUpper = Character.isUpperCase(ch);
+            if(isUpper) {
+                ch = Character.toLowerCase(ch);
+            }
+            int indx = alphabet.indexOf(ch);
+            if(indx != -1) {
+                boolean isInKey1 = alphabet.substring(0,key1).indexOf(ch) != -1 ? true : false;
+                char newChar = isInKey1 ? key1Encryption.charAt(indx) : key2Encryption.charAt(indx);
+                newChar = isUpper ? Character.toUpperCase(newChar) : newChar;
+                encryptStr.setCharAt(i,newChar);
+            }
+        }
+        return encryptStr.toString();
+    }
     private String encryptWithSubStringMethod(String Str, int EncryptKey){
         String alpahbet="abcdefghijklmnopqrstuvwxyz";
         String encodedAlphabet = encryptionBuilderFromSubStirng(EncryptKey);
@@ -122,18 +144,19 @@ public class CaesarCipher {
         System.out.println("In a caesar cipher");
         CaesarCipher CC = new CaesarCipher();
         CC.reverseString("test");
-        int EncryptionKey = 19;
+        int EncryptionKey = 15;
+        String codeMessage = "At noon be in the conference room with your hat on for a surprise party. YELL LOUD!";
         System.out.println(CC.encryptionBuilder(EncryptionKey));
         System.out.println(CC.encryptionBuilderFromSubStirng(EncryptionKey));
-        String EncryptedStr = CC.EncryptString("A BATMAN and Robin", EncryptionKey);
+        String EncryptedStr = CC.EncryptString(codeMessage, EncryptionKey);
         String DecryptedStr= CC.DecryptString(EncryptedStr,EncryptionKey);
         System.out.format("Encrypted String: %s\nDecrypted String: %s\n", EncryptedStr,DecryptedStr);
 
 
-        String EncryptedSubString = CC.encryptWithSubStringMethod("A BATMAN and Robin", EncryptionKey);
+        String EncryptedSubString = CC.encryptWithSubStringMethod(codeMessage, EncryptionKey);
         String DecryptedSubString = CC.encryptWithSubStringMethod(EncryptedSubString, 26-EncryptionKey);
         System.out.format("Substring Encrypted Stirng: %s\n",EncryptedSubString);
-        System.out.format("Substring Encrypted Stirng: %s\n",DecryptedSubString);
+        System.out.format("Substring Decrypted Stirng: %s\n",DecryptedSubString);
 
         //Reading from a file and writing to a file
         String FileName = "message.txt";
@@ -151,10 +174,13 @@ public class CaesarCipher {
             br.close();
             fr.close();
 
-            FileWriter fw = new FileWriter(OutputFile, true);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.append(sb);
+            String EncryptedFileString = CC.encryptWithSubStringMethod(sb.toString(),EncryptionKey);
+            String DecryptedFileString = CC.encryptWithSubStringMethod(EncryptedFileString,26-EncryptionKey);
 
+            FileWriter fw = new FileWriter(OutputFile);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(EncryptedFileString+'\n');
+            bw.write(DecryptedFileString);
             bw.close();
             fw.close();
 
@@ -170,6 +196,8 @@ public class CaesarCipher {
         }
 
 
+        int key_one=23;
+        int key_two = 17;
 
 //        System.out.println(System.getProperty("user.dir"));
     }
