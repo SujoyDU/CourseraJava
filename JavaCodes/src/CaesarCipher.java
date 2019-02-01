@@ -19,6 +19,14 @@ public class CaesarCipher {
         }
         return charAr;
     }
+
+    private String encryptionBuilderFromSubStirng(int EncryptKey){
+        String alpahbet="abcdefghijklmnopqrstuvwxyz";
+        String enc = alpahbet.substring(EncryptKey);
+        enc = enc+ alpahbet.substring(0,EncryptKey);
+
+        return enc;
+    }
     private String EncryptString(String Str,int EncryptKey){
         char[] encryptStr = new char[Str.length()];
         for(int i=0; i< Str.length(); i++){
@@ -69,8 +77,9 @@ public class CaesarCipher {
         CaesarCipher CC = new CaesarCipher();
         CC.reverseString("test");
         System.out.println(CC.encryptionBuilder(20));
-        String EncryptedStr = CC.EncryptString("Hello World ZZZZZZZZzzzzzzz", 1);
-        String DecryptedStr= CC.DecryptString(EncryptedStr,1);
+        System.out.println(CC.encryptionBuilderFromSubStirng(20));
+        String EncryptedStr = CC.EncryptString("I AM", 17);
+        String DecryptedStr= CC.DecryptString(EncryptedStr,17);
         System.out.format("Encrypted String: %s\nDecrypted String: %s", EncryptedStr,DecryptedStr);
 
     }
