@@ -1,3 +1,5 @@
+import java.io.*;
+
 public class CaesarCipher {
 
     //Coursera Logic using Substring and characters
@@ -10,7 +12,7 @@ public class CaesarCipher {
     }
     private String encryptWithSubStringMethod(String Str, int EncryptKey){
         String alpahbet="abcdefghijklmnopqrstuvwxyz";
-        String enc = encryptionBuilderFromSubStirng(EncryptKey);
+        String encodedAlphabet = encryptionBuilderFromSubStirng(EncryptKey);
         StringBuilder encryptedString=new StringBuilder(Str);
         for(int i=0; i<encryptedString.length(); i++){
             char CurrentChar = encryptedString.charAt(i);
@@ -19,7 +21,7 @@ public class CaesarCipher {
 
             int idx = alpahbet.indexOf(CurrentChar);
             if(idx != -1) {
-                char newChar = enc.charAt(idx);
+                char newChar = encodedAlphabet.charAt(idx);
                 if(isUpper) newChar = Character.toUpperCase(newChar);
                 encryptedString.setCharAt(i,newChar);
             }
@@ -132,6 +134,45 @@ public class CaesarCipher {
         String DecryptedSubString = CC.encryptWithSubStringMethod(EncryptedSubString, 26-EncryptionKey);
         System.out.format("Substring Encrypted Stirng: %s\n",EncryptedSubString);
         System.out.format("Substring Encrypted Stirng: %s\n",DecryptedSubString);
+
+        //Reading from a file and writing to a file
+        String FileName = "message.txt";
+        String OutputFile = "abcd.txt";
+        StringBuilder sb = new StringBuilder();
+        try{
+
+            FileReader fr = new FileReader(FileName);
+            BufferedReader br = new BufferedReader(fr);
+
+            String line = new String();
+            while( (line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            br.close();
+            fr.close();
+
+            FileWriter fw = new FileWriter(OutputFile, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.append(sb);
+
+            bw.close();
+            fw.close();
+
+            System.out.println(sb);
+        }
+        catch(FileNotFoundException ex){
+            System.out.println("Unable to open file "+ FileName);
+
+        }
+        catch (IOException ex){
+            System.out.println("Unable to read file\n");
+            ex.printStackTrace();
+        }
+
+
+
+//        System.out.println(System.getProperty("user.dir"));
     }
+
 
 }
