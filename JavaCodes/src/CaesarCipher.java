@@ -24,9 +24,8 @@ public class CaesarCipher {
             }
             int indx = alphabet.indexOf(ch);
             if(indx != -1) {
-                boolean isInKey1 = alphabet.substring(0,key1).indexOf(ch) != -1 ? true : false;
-                char newChar = isInKey1 ? key1Encryption.charAt(indx) : key2Encryption.charAt(indx);
-                newChar = isUpper ? Character.toUpperCase(newChar) : newChar;
+                char newChar = (i%2 == 0) ? key1Encryption.charAt(indx) : key2Encryption.charAt(indx);
+                if(isUpper) newChar = Character.toUpperCase(newChar);
                 encryptStr.setCharAt(i,newChar);
             }
         }
@@ -196,8 +195,12 @@ public class CaesarCipher {
         }
 
 
-        int key_one=23;
-        int key_two = 17;
+        int key_one= 8;
+        int key_two = 21;
+        String TwoCipherEncrypt = CC.encryptWithTwoCiphers(codeMessage,key_one,key_two);
+        String TwoCipherDecrypt = CC.encryptWithTwoCiphers(TwoCipherEncrypt,26-key_one, 26-key_two);
+        System.out.println("Two cipher encrypted String " + TwoCipherEncrypt);
+        System.out.println("Two Cipher Decrypted String " + TwoCipherDecrypt);
 
 //        System.out.println(System.getProperty("user.dir"));
     }
